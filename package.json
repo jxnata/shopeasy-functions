@@ -1,0 +1,9 @@
+{
+  "name": "shopeasy-function-increment",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "node-appwrite": "^13.0.0"
+  }
+}
