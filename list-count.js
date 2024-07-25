@@ -1,18 +1,18 @@
-const sdk = require('node-appwrite')
+import { Client, Databases } from 'node-appwrite'
 
-const client = new sdk.Client()
+const client = new Client()
 
 client
 	.setEndpoint(process.env.APPWRITE_ENDPOINT)
 	.setProject(process.env.APPWRITE_PROJECT_ID)
 	.setKey(process.env.APPWRITE_API_KEY)
 
-const database = new sdk.Databases(client)
+const database = new Databases(client)
 
 const create_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(create)$/
 const delete_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(delete)$/
 
-module.exports = async function (req, res, log, error) {
+export default async ({ req, res, log, error }) => {
 	const payload = req.body
 	log(payload)
 	const listId = payload.list.$id
