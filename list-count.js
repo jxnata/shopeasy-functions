@@ -18,11 +18,13 @@ module.exports = async function (req, res) {
 
 		let count = list.count + 1
 
-		if (req.events.includes('databases.production.collections.items.documents.create')) {
+		if (req.events.includes('databases.*.collections.items.documents.*.create')) {
 			count += 1
-		} else if (req.events.includes('databases.production.collections.items.documents.delete')) {
+		} else if (req.events.includes('databases.*.collections.items.documents.*.delete')) {
 			count -= 1
 		}
+
+		if (count < 0) return res.send('count cannot be less than 0', 400)
 
 		await database.updateDocument('production', 'lists', listId, { count })
 
