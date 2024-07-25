@@ -16,7 +16,13 @@ module.exports = async function (req, res) {
 	try {
 		const list = await database.getDocument('production', 'lists', listId)
 
-		const count = list.count + 1
+		let count = list.count + 1
+
+		if (req.events.includes('databases.production.collections.items.documents.create')) {
+			count += 1
+		} else if (req.events.includes('databases.production.collections.items.documents.delete')) {
+			count -= 1
+		}
 
 		await database.updateDocument('production', 'lists', listId, { count })
 
