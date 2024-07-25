@@ -14,6 +14,7 @@ const delete_event = /^databases\.production\.collections\.items\.documents\.[a-
 
 module.exports = async function (req, res) {
 	const payload = req.body
+	console.log(payload)
 	const listId = payload.list.$id
 	const event = req.headers['x-appwrite-event']
 
