@@ -12,7 +12,7 @@ const database = new sdk.Databases(client)
 const create_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(create)$/
 const delete_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(delete)$/
 
-export default async ({ req, res, log, error }) => {
+module.exports = async function (req, res, log, error) {
 	const payload = req.body
 	log(payload)
 	const listId = payload.list.$id
@@ -34,8 +34,8 @@ export default async ({ req, res, log, error }) => {
 		await database.updateDocument('production', 'lists', listId, { count })
 
 		res.send(`count for list ${listId} incremented to: ` + count)
-	} catch (error) {
-		error(error)
+	} catch (exception) {
+		error(exception)
 		res.send('error incrementing count', 500)
 	}
 }
