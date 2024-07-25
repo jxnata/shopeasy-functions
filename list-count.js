@@ -12,9 +12,9 @@ const database = new sdk.Databases(client)
 const create_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(create)$/
 const delete_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(delete)$/
 
-module.exports = async function (req, res) {
+export default async ({ req, res, log, error }) => {
 	const payload = req.body
-	console.log(payload)
+	log(payload)
 	const listId = payload.list.$id
 	const event = req.headers['x-appwrite-event']
 
@@ -35,7 +35,7 @@ module.exports = async function (req, res) {
 
 		res.send(`count for list ${listId} incremented to: ` + count)
 	} catch (error) {
-		console.error(error)
+		error(error)
 		res.send('error incrementing count', 500)
 	}
 }
