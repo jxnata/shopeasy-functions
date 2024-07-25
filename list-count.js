@@ -14,7 +14,6 @@ const delete_event = /^databases\.production\.collections\.items\.documents\.[a-
 
 export default async ({ req, res, log, error }) => {
 	const payload = req.body
-	log(payload)
 	const listId = payload.list.$id
 	const event = req.headers['x-appwrite-event']
 
@@ -33,9 +32,9 @@ export default async ({ req, res, log, error }) => {
 
 		await database.updateDocument('production', 'lists', listId, { count })
 
-		res.send(`count for list ${listId} incremented to: ` + count)
+		return res.send(`count for list ${listId} incremented to: ` + count)
 	} catch (exception) {
 		error(exception)
-		res.send('error incrementing count', 500)
+		return res.send('error incrementing count', 500)
 	}
 }
