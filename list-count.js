@@ -31,7 +31,7 @@ export default async ({ req, res, log, error }) => {
 		if (count < 0) return res.send('count cannot be less than 0', 400)
 
 		await database.updateDocument('production', 'lists', listId, { count })
-
+		log(`count for list ${listId} incremented to: ` + count)
 		return res.send(`count for list ${listId} incremented to: ` + count)
 	} catch (exception) {
 		error(exception)
