@@ -9,19 +9,22 @@ client
 
 const database = new sdk.Databases(client)
 
+const create_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(create)$/
+const delete_event = /^databases\.production\.collections\.items\.documents\.[a-zA-Z0-9]+\.(delete)$/
+
 module.exports = async function (req, res) {
-	console.log(req)
-	const payload = req.payload
-	const listId = payload.document.list
+	const payload = req.body
+	const listId = payload.list.$id
+	const event = req.headers['x-appwrite-event']
 
 	try {
 		const list = await database.getDocument('production', 'lists', listId)
 
 		let count = list.count + 1
 
-		if (req.events.includes('databases.*.collections.items.documents.*.create')) {
+		if (create_event.test(event)) {
 			count += 1
-		} else if (req.events.includes('databases.*.collections.items.documents.*.delete')) {
+		} else if (delete_event.test(event)) {
 			count -= 1
 		}
 
