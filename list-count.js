@@ -20,7 +20,7 @@ export default async ({ req, res, log, error }) => {
 	try {
 		const list = await database.getDocument('production', 'lists', listId)
 
-		let count = list.count + 1
+		let count = list.count
 
 		if (create_event.test(event)) {
 			count += 1
