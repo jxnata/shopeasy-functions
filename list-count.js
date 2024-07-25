@@ -10,7 +10,8 @@ client
 const database = new sdk.Databases(client)
 
 module.exports = async function (req, res) {
-	const payload = JSON.parse(req.payload)
+	console.log(req)
+	const payload = req.payload
 	const listId = payload.document.list
 
 	try {
