@@ -12,9 +12,10 @@ client
 const account = new Account(client)
 const users = new Users(client)
 
-export default async ({ req, res, error }) => {
+export default async ({ req, res, log, error }) => {
 	try {
-		const payload = req.body
+		log(req.body)
+		const payload = JSON.parse(req.body)
 		let name
 
 		if (payload.fullName) {
