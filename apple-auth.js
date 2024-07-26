@@ -59,16 +59,12 @@ export default async ({ req, res, log, error }) => {
 
 			const token = await users.createToken(newUser.$id)
 
-			const session = await account.createSession(token.userId, token.secret)
-
-			return res.send(session)
+			return res.send(token)
 		}
 
 		const token = await users.createToken(search.users[0].$id)
 
-		const session = await account.createSession(token.userId, token.secret)
-
-		return res.send(session)
+		return res.send(token)
 	} catch (exception) {
 		error(exception)
 		return res.send('Authentication failed, please try again later.', 500)
