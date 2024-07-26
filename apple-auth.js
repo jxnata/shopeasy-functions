@@ -14,7 +14,6 @@ const users = new Users(client)
 
 export default async ({ req, res, log, error }) => {
 	try {
-		log(req.body)
 		const payload = JSON.parse(req.body)
 		let name
 
