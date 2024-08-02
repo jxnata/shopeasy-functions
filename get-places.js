@@ -3,7 +3,6 @@ import axios from 'axios'
 export default async ({ req, res, log, error }) => {
 	try {
 		const { term, latitude, longitude } = req.body
-		log(req.body)
 
 		if (!term || !latitude || !longitude) {
 			return res.send('missing required parameters', 400)
@@ -27,7 +26,7 @@ export default async ({ req, res, log, error }) => {
 			lon: location.position.lon,
 		}))
 
-		return res.json(locations)
+		return res.send(locations)
 	} catch (exception) {
 		error(exception)
 		return res.send('search location error', 500)
