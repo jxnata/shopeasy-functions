@@ -4,6 +4,7 @@ export default async ({ req, res, log, error }) => {
 	try {
 		const { term, latitude, longitude } = req.body
 
+		log(req.body)
 		log(term)
 		log(latitude)
 		log(longitude)
