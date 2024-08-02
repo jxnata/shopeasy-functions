@@ -4,8 +4,9 @@ export default async ({ req, res, log, error }) => {
 	try {
 		const payload = req.body
 		const searchQuery = payload.search + '.json'
-
-		const response = await axios.get('https://api.tomtom.com/search/2/search/' + searchQuery, {
+		const uri = 'https://api.tomtom.com/search/2/search/' + searchQuery
+		log(uri)
+		const response = await axios.get(uri, {
 			params: {
 				key: process.env.TOMTOM_API_KEY,
 				typeahead: true,
