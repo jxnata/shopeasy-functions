@@ -6,6 +6,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"apple-signin-auth": "^1.7.6",
+		"axios": "^1.7.3",
 		"crypto": "^1.0.1",
 		"dotenv": "^16.4.5",
 		"node-appwrite": "^13.0.0"
