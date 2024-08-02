@@ -25,7 +25,7 @@ export default async ({ req, res, log, error }) => {
 			lat: location.position.lat,
 			lon: location.position.lon,
 		}))
-
+		log(locations)
 		return res.send(locations)
 	} catch (exception) {
 		error(exception)
