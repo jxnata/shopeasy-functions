@@ -2,16 +2,16 @@ import axios from 'axios'
 
 export default async ({ req, res, log, error }) => {
 	try {
-		const { search, latitude, longitude } = req.body
-		log(search)
+		const payload = req.body
+		log(payload)
 
-		const response = await axios.get(`https://api.tomtom.com/search/2/search/${search}.json`, {
+		const response = await axios.get(`https://api.tomtom.com/search/2/search/${payload.search}.json`, {
 			params: {
 				key: process.env.TOMTOM_API_KEY,
 				typeahead: true,
 				limit: 5,
-				lat: latitude,
-				lon: longitude,
+				lat: payload.latitude,
+				lon: payload.longitude,
 			},
 		})
 
