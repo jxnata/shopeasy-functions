@@ -3,6 +3,7 @@ import axios from 'axios'
 export default async ({ req, res, log, error }) => {
 	try {
 		const { search, latitude, longitude } = req.body
+		log(search)
 
 		const response = await axios.get(`https://api.tomtom.com/search/2/search/${search}.json`, {
 			params: {
