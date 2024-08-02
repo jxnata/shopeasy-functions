@@ -19,7 +19,7 @@ export default async ({ req, res, log, error }) => {
 				lon: longitude,
 			},
 		})
-
+		log(response.data)
 		const locations = response.data.results.map((location) => ({
 			place: location.id,
 			name: location.poi.name,
