@@ -17,22 +17,18 @@ export default async ({ req, res, log, error }) => {
 				limit: 5,
 				lat: latitude,
 				lon: longitude,
+				categorySet: '7315',
 			},
 		})
-		log(response.data)
-		log(response.data.results)
-		const locations = []
 
-		for (const location of response.data.results) {
-			locations.push({
-				place: location.id,
-				name: location.poi.name,
-				address: location.address.freeformAddress,
-				lat: location.position.lat,
-				lon: location.position.lon,
-			})
-		}
-		log(locations)
+		const locations = response.data.results.map((location) => ({
+			place: location.id,
+			name: location.poi.name,
+			address: location.address.freeformAddress,
+			lat: location.position.lat,
+			lon: location.position.lon,
+		}))
+
 		return res.send(locations)
 	} catch (exception) {
 		error(exception)
