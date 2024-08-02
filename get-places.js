@@ -20,6 +20,7 @@ export default async ({ req, res, log, error }) => {
 			},
 		})
 		log(response.data)
+		log(typeof response.data.results)
 		const locations = response.data.results.map((location) => ({
 			place: location.id,
 			name: location.poi.name,
