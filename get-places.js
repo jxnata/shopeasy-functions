@@ -4,7 +4,11 @@ export default async ({ req, res, log, error }) => {
 	try {
 		const { term, latitude, longitude } = req.body
 
+		log(term)
+		log(latitude)
+		log(longitude)
 		if (!term || !latitude || !longitude) {
+			error('missing required parameters')
 			return res.send('missing required parameters', 400)
 		}
 
