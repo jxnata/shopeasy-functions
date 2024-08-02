@@ -20,14 +20,18 @@ export default async ({ req, res, log, error }) => {
 			},
 		})
 		log(response.data)
-		log(typeof response.data.results)
-		const locations = response.data.results.map((location) => ({
-			place: location.id,
-			name: location.poi.name,
-			address: location.address.freeformAddress,
-			lat: location.position.lat,
-			lon: location.position.lon,
-		}))
+		log(response.data.results)
+		const locations = []
+
+		for (const location of response.data.results) {
+			locations.push({
+				place: location.id,
+				name: location.poi.name,
+				address: location.address.freeformAddress,
+				lat: location.position.lat,
+				lon: location.position.lon,
+			})
+		}
 		log(locations)
 		return res.send(locations)
 	} catch (exception) {
