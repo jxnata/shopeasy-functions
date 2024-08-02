@@ -3,9 +3,9 @@ import axios from 'axios'
 export default async ({ req, res, log, error }) => {
 	try {
 		const payload = req.body
-		log(payload)
+		const searchQuery = payload.search + '.json'
 
-		const response = await axios.get(`https://api.tomtom.com/search/2/search/${payload.search}.json`, {
+		const response = await axios.get('https://api.tomtom.com/search/2/search/' + searchQuery, {
 			params: {
 				key: process.env.TOMTOM_API_KEY,
 				typeahead: true,
