@@ -2,17 +2,20 @@ import axios from 'axios'
 
 export default async ({ req, res, log, error }) => {
 	try {
-		const payload = req.body
-		const searchQuery = payload.search + '.json'
-		const uri = 'https://api.tomtom.com/search/2/search/' + searchQuery
-		log(uri)
-		const response = await axios.get(uri, {
+		const { term, latitude, longitude } = req.body
+		log(term, latitude, longitude)
+
+		if (!term || !latitude || !longitude) {
+			return res.status(400).json({ error: 'missing required parameters' })
+		}
+
+		const response = await axios.get(`https://api.tomtom.com/search/2/search/${term}.json`, {
 			params: {
 				key: process.env.TOMTOM_API_KEY,
 				typeahead: true,
 				limit: 5,
-				lat: payload.latitude,
-				lon: payload.longitude,
+				lat: latitude,
+				lon: longitude,
 			},
 		})
 
@@ -29,4 +32,10 @@ export default async ({ req, res, log, error }) => {
 		error(exception)
 		return res.send('search location error', 500)
 	}
+}
+
+const j = {
+	term: 'coob',
+	latitude: -11.3014048,
+	longitude: -41.8648057,
 }
