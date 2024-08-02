@@ -6,7 +6,7 @@ export default async ({ req, res, log, error }) => {
 		log(term, latitude, longitude)
 
 		if (!term || !latitude || !longitude) {
-			return res.status(400).json({ error: 'missing required parameters' })
+			return res.send('missing required parameters', 400)
 		}
 
 		const response = await axios.get(`https://api.tomtom.com/search/2/search/${term}.json`, {
@@ -32,10 +32,4 @@ export default async ({ req, res, log, error }) => {
 		error(exception)
 		return res.send('search location error', 500)
 	}
-}
-
-const j = {
-	term: 'coob',
-	latitude: -11.3014048,
-	longitude: -41.8648057,
 }
