@@ -17,7 +17,7 @@ export default async ({ req, res, log, error }) => {
 				limit: 5,
 				lat: latitude,
 				lon: longitude,
-				categorySet: '7315',
+				categorySet: '7332,9361042,7326,7373,9361',
 			},
 		})
 
