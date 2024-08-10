@@ -14,7 +14,7 @@ export default async ({ req, res, log, error }) => {
 	try {
 		const payload = JSON.parse(req.body)
 
-		// ----------> Get Apple access token <----------
+		// ----------> Get Google access token <----------
 
 		const { data } = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${payload.idToken}`)
 
