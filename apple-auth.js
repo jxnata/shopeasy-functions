@@ -1,4 +1,4 @@
-import { Account, Client, ID, Query, Users } from 'node-appwrite'
+import { Client, ID, Query, Users } from 'node-appwrite'
 import appleSigninAuth from 'apple-signin-auth'
 import crypto from 'crypto'
 
@@ -9,7 +9,6 @@ client
 	.setProject(process.env.APPWRITE_PROJECT_ID)
 	.setKey(process.env.APPWRITE_API_KEY)
 
-const account = new Account(client)
 const users = new Users(client)
 
 export default async ({ req, res, log, error }) => {
