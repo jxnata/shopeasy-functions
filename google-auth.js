@@ -30,7 +30,8 @@ export default async ({ req, res, log, error }) => {
 
 		const search = await users.list([Query.equal('email', email)])
 		log(search)
-		if (!search.total) {
+
+		if (Object.keys(search).length === 0 || !search.total) {
 			const newUser = await users.create(ID.unique(), email, undefined, undefined, name)
 
 			const token = await users.createToken(newUser.$id)
@@ -44,7 +45,7 @@ export default async ({ req, res, log, error }) => {
 
 		return res.send(token)
 	} catch (exception) {
-		log(exception)
+		log('exception ', exception)
 		error(exception)
 		return res.send('Authentication failed, please try again later.', 500)
 	}
