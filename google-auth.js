@@ -25,13 +25,22 @@ export default async ({ req, res, log, error }) => {
 
 		const email = data.email
 		const name = data.name
-
+		log(name, email)
 		// ----------> Create AppWrite session <----------
 
 		const search = await users.list([Query.equal('email', email)])
 		log(search)
+		let exists = false
 
-		if (Object.keys(search).length === 0 || !search.total) {
+		if (Object.keys(search).length > 0) {
+			if (!search.total) return
+			if (!search.users) return
+			if (!search.users[0]) return
+
+			exists = true
+		}
+
+		if (!exists) {
 			const newUser = await users.create(ID.unique(), email, undefined, undefined, name)
 
 			const token = await users.createToken(newUser.$id)
