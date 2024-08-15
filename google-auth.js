@@ -25,7 +25,7 @@ export default async ({ req, res, log, error }) => {
 
 		const email = data.email
 		const name = data.name
-		log(name, email)
+		log(typeof data)
 		// ----------> Create AppWrite session <----------
 
 		const search = await users.list([Query.equal('email', email)])
