@@ -30,7 +30,7 @@ export default async ({ req, res, log, error }) => {
 
 		const search = await users.list([Query.equal('email', email)])
 		log(search)
-		if (search.total === 0) {
+		if (!search.total) {
 			const newUser = await users.create(ID.unique(), email, undefined, undefined, name)
 
 			const token = await users.createToken(newUser.$id)
