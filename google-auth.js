@@ -15,8 +15,9 @@ export default async ({ req, res, log, error }) => {
 		const payload = JSON.parse(req.body)
 
 		// ----------> Get Google access token <----------
-
+		log(payload)
 		const { data } = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${payload.idToken}`)
+		log(data)
 
 		if (!data) throw new Error('Invalid request.')
 		if (data.aud !== process.env.GOOGLE_CLIENT_ID_ANDROID && data.aud !== process.env.GOOGLE_CLIENT_ID_IOS)
@@ -28,19 +29,22 @@ export default async ({ req, res, log, error }) => {
 		// ----------> Create AppWrite session <----------
 
 		const search = await users.list([Query.equal('email', email)])
-
+		log(search)
 		if (search.total === 0) {
 			const newUser = await users.create(ID.unique(), email, undefined, undefined, name)
 
 			const token = await users.createToken(newUser.$id)
+			log(token)
 
 			return res.send(token)
 		}
 
 		const token = await users.createToken(search.users[0].$id)
+		log(token)
 
 		return res.send(token)
 	} catch (exception) {
+		log(exception)
 		error(exception)
 		return res.send('Authentication failed, please try again later.', 500)
 	}
