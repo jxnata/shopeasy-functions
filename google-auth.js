@@ -24,10 +24,11 @@ export default async ({ req, res, log, error }) => {
 
 		const email = data.email
 		const name = data.name
+		log(email, name)
 		// ----------> Create AppWrite session <----------
 
 		const search = await users.list([Query.equal('email', email)])
-
+		log(search)
 		if (search.total > 0) {
 			const newUser = await users.create(ID.unique(), email, undefined, undefined, name)
 
