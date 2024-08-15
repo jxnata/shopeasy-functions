@@ -19,13 +19,13 @@ export default async ({ req, res, log, error }) => {
 		const { data } = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${payload.idToken}`)
 		log(data)
 
+		log(typeof data)
 		if (!data) throw new Error('Invalid request.')
 		if (data.aud !== process.env.GOOGLE_CLIENT_ID_ANDROID && data.aud !== process.env.GOOGLE_CLIENT_ID_IOS)
 			throw new Error('Invalid Google ID token.')
 
 		const email = data.email
 		const name = data.name
-		log(typeof data)
 		// ----------> Create AppWrite session <----------
 
 		const search = await users.list([Query.equal('email', email)])
