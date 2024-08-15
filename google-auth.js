@@ -17,9 +17,9 @@ export default async ({ req, res, log, error }) => {
 		// ----------> Get Google access token <----------
 		log(payload)
 		const { data } = await axios.get(`https://oauth2.googleapis.com/tokeninfo?id_token=${payload.idToken}`)
-		log(data)
+		log(data.aud !== process.env.GOOGLE_CLIENT_ID_ANDROID)
+		log(data.aud !== process.env.GOOGLE_CLIENT_ID_IOS)
 
-		log(typeof data)
 		if (!data) throw new Error('Invalid request.')
 		if (data.aud !== process.env.GOOGLE_CLIENT_ID_ANDROID && data.aud !== process.env.GOOGLE_CLIENT_ID_IOS)
 			throw new Error('Invalid Google ID token.')
