@@ -15,7 +15,7 @@ export default async ({ req, res, log, error }) => {
 		const { data } = await axios.post(
 			'https://api.openai.com/v1/chat/completions',
 			{
-				model: 'gpt-3.5-turbo',
+				model: 'gpt-4o-mini',
 				messages: [{ role: 'user', content: prompt }],
 				max_tokens: 100,
 			},
@@ -46,6 +46,6 @@ export default async ({ req, res, log, error }) => {
 		return res.send(suggestions)
 	} catch (exception) {
 		error(exception)
-		return res.send('Authentication failed, please try again later.', 500)
+		return res.send('Suggestion failed, please try again later.', 500)
 	}
 }
