@@ -42,7 +42,7 @@ export default async ({ req, res, log, error }) => {
 		// ----------> Call OpenAI to get suggestions <----------
 
 		const list = payload.items.join(', ')
-		const prompt = `Given the following shopping list: ${list}, suggest 10 other items that might be useful to add to this list. Do not repeat the existing items. Return only the items, separated by commas. If you can't help me, just return the word ERROR.`
+		const prompt = `Given the following shopping list: ${list}, suggest 5 other items that might be useful to add to this list. Do not repeat the existing items. Return only the items, separated by commas. If you can't help me, just return the word ERROR.`
 
 		const { data } = await axios.post(
 			'https://api.openai.com/v1/chat/completions',
