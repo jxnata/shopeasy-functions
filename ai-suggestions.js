@@ -27,7 +27,11 @@ export default async ({ req, res, log, error }) => {
 
 		if (!userId) throw new Error('Missing user ID')
 
-		const prefs = await users.getPrefs(userId)
+		const user = await users.get(userId)
+
+		if (!user) throw new Error('User not found')
+
+		const prefs = user.prefs
 		log(prefs)
 		let current = 0
 
