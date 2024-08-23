@@ -28,7 +28,7 @@ export default async ({ req, res, log, error }) => {
 		if (!userId) throw new Error('Missing user ID')
 
 		const prefs = await users.getPrefs(userId)
-
+		log(prefs)
 		let current = 0
 
 		if (prefs.ai_usage) {
@@ -44,7 +44,7 @@ export default async ({ req, res, log, error }) => {
 
 		const list = payload.items.join(', ')
 		const prompt = `Given the following shopping list: ${list}, suggest 10 other items that might be useful to add to this list. Do not repeat the existing items. Return only the items, separated by commas. If you can't help me, just return the word ERROR.`
-
+		log(list)
 		const { data } = await axios.post(
 			'https://api.openai.com/v1/chat/completions',
 			{
@@ -72,7 +72,7 @@ export default async ({ req, res, log, error }) => {
 
 		const usage = data.usage.total_tokens
 		users.updatePrefs(userId, { ai_usage: current + usage, last_usage: Date.now() })
-
+		log(usage)
 		// ----------> Check violations <----------
 
 		if (data.choices[0].message.content.includes('ERROR')) {
@@ -88,7 +88,7 @@ export default async ({ req, res, log, error }) => {
 		// ----------> Return suggestions <----------
 
 		const suggestionsString = data.choices[0].message.content
-
+		log(suggestionsString)
 		const suggestions = suggestionsString
 			.split(',')
 			.map((suggestion) => suggestion.trim())
