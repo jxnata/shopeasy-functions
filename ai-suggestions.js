@@ -92,7 +92,7 @@ export default async ({ req, res, log, error }) => {
 			.map((suggestion) => suggestion.trim())
 			.filter((suggestion) => suggestion.length > 0)
 
-		return res.send(suggestions)
+		return res.send({ sugestions, usage: data.usage.total_tokens })
 	} catch (exception) {
 		error(exception.toString())
 		return res.send('Suggestion failed, please try again later.', 500)
