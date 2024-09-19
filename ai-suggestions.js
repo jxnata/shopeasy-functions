@@ -22,22 +22,22 @@ export default async ({ req, res, log, error }) => {
 		if (!payload.items.length) throw new Error('Empty list items')
 
 		// ----------> Verify AI usage limit <----------
-		const userId = req.headers['x-appwrite-user-id']
+		// const userId = req.headers['x-appwrite-user-id']
 
-		if (!userId) throw new Error('Missing user ID')
+		// if (!userId) throw new Error('Missing user ID')
 
-		const prefs = await users.getPrefs(userId)
+		// const prefs = await users.getPrefs(userId)
 
-		let current = 0
+		// let current = 0
 
-		if (prefs.ai_usage) {
-			current = prefs.ai_usage
-			const last_usage = prefs.last_usage || 0
+		// if (prefs.ai_usage) {
+		// 	current = prefs.ai_usage
+		// 	const last_usage = prefs.last_usage || 0
 
-			if (last_usage < Date.now() - ONE_DAY) current = 0
+		// 	if (last_usage < Date.now() - ONE_DAY) current = 0
 
-			if (current > DAY_LIMIT) throw new Error('AI usage limit exceeded')
-		}
+		// 	if (current > DAY_LIMIT) throw new Error('AI usage limit exceeded')
+		// }
 
 		// ----------> Call OpenAI to get suggestions <----------
 
@@ -69,19 +69,19 @@ export default async ({ req, res, log, error }) => {
 
 		// ----------> Save user preferences <----------
 
-		const usage = data.usage.total_tokens
-		users.updatePrefs(userId, { ai_usage: current + usage, last_usage: Date.now() })
+		// const usage = data.usage.total_tokens
+		// users.updatePrefs(userId, { ai_usage: current + usage, last_usage: Date.now() })
 
 		// ----------> Check violations <----------
 
-		if (data.choices[0].message.content.includes('ERROR')) {
-			await database.createDocument('production', 'violation', ID.unique(), {
-				user: userId,
-				content: list,
-			})
+		// if (data.choices[0].message.content.includes('ERROR')) {
+		// 	await database.createDocument('production', 'violation', ID.unique(), {
+		// 		user: userId,
+		// 		content: list,
+		// 	})
 
-			throw new Error('Explicit content')
-		}
+		// 	throw new Error('Explicit content')
+		// }
 
 		// ----------> Return suggestions <----------
 
